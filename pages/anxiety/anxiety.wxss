@@ -1,0 +1,16 @@
+/* pages/anxiety/anxiety.wxss */
+.radio-group {
+  margin:1%;
+  display: flex;
+  flex-direction: column;
+}
+.radio {
+  margin: 2%;
+}
+.form-group{
+background:#fff;
+padding:0 30rpx;
+align-items:center;
+min-height:100rpx;
+justify-content:space-between;
+}

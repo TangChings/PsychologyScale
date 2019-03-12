@@ -1,0 +1,15 @@
+{
+  "pages":[
+    "pages/home/home",
+    "pages/anxiety/anxiety",
+    "pages/depression/depression",
+    "pages/assess/assess",
+    "pages/info/info"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "兰大在线心理测评",
+    "navigationBarTextStyle":"black"
+  }
+}

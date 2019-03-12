@@ -1,0 +1,288 @@
+<view class="cu-bar solid-bottom">
+  <view class='action'>
+    <text class='icon-title text-blue'></text>量表
+  </view>
+</view>
+<block wx:if="{{ifShow == false}}">
+  <view class='padding bg-white'>
+    <view class='text-left padding'>下面有二十条文字（括号中为症状名称），请仔细阅读每一条，把意思弄明白，然后根据您最近一星期的实际情况，选择适当的选项。</view>
+    <button class='cu-btn block bg-green margin-tb-sm lg' bindtap='start'>开始测试</button>
+    </view>
+</block>
+
+<block wx:if="{{ifShow != false}}">
+  <view class='bg-white padding'>
+    {{index+1}}.{{nowQuestion.question}}
+    <view class="form-group padding">
+      <radio-group class="radio-group" bindchange="radioChange" name="question">
+        <label class="radio" wx:for="{{items}}">
+          <radio value="{{item.value}}" checked='{{checked}}'/>
+          {{item.name}}
+        </label>
+      </radio-group>
+      <view class='solid-bottom text-xl padding'>
+        <text class='text-black text-bold'>答题进度：{{index + 1}}/{{question.length}}</text>
+      </view>
+      <view class='flex margin-top'>
+    <view class="cu-progress round striped active">
+      <view class='bg-green' style="width:{{width}}%;"></view>
+    </view>
+    </view>
+    </view>
+  </view>
+</block>
+
+<!--
+  <view class="cu-bar solid-bottom">
+  <view class='action'>
+    <text class='icon-title text-blue'></text>量表
+  </view>
+  </view>
+  <view class='padding bg-white'>
+  <view class='text-left padding'>下面有二十条文字（括号中为症状名称），请仔细阅读每一条，把意思弄明白，然后根据您最近一星期的实际情况，选择适当的选项。</view>
+  </view>
+
+  <form bindsubmit="formSubmit">
+  <view class="form-group">
+    <view class='padding bg-white'>1. 我觉得比平时容易紧张和着急（焦虑）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question1">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}"/>
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question1 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>2. 我无缘无故地感到害怕（害怕）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question2">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question2 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>3．我容易心里烦乱或觉得惊恐（惊恐）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question3">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question3 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>4．我觉得我可能将要发疯 （发疯感）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question4">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question4 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>5．我觉得一切都很好，也不会发生什么不幸（不幸预感）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question5">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question5 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>6．我手脚发抖打颤（手足颤抖）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question6">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question6 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>7．我因为头痛、颈痛和背痛而苦恼（躯体疼痛）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question7">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question7 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>8．我感觉容易衰弱和疲乏 （乏力）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question8">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question8 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>9．我觉得心平气和，并且容易安静坐着 （静坐不能）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question9">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question9 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>10．我觉得心跳得快（心悸）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question10">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question10 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>11．我因为一阵阵头晕而苦恼（头昏）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question11">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question11 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>12．我有晕倒发作，或觉得要晕倒似的（晕厥感）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question12">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question12 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>13．我呼气吸气都感到很容易（呼吸困难）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question13">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question13 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>14．我手脚麻木和刺痛（手足刺痛）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question14">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question14 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>15．我因胃痛和消化不良而苦恼（胃痛或消化不良） </view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question15">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question15 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>16．我常常要小便（尿意频数）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question16">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question16 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>17．我的手常常是干燥温暖的（多汗）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question17">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question17 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>18．我脸红发热 （面部潮红）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question18">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question18 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="form-group">
+    <view class='padding bg-white'>19．我容易入睡并且一夜睡得很好（睡眠障碍）</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question19">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question19 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>  <view class="form-group">
+    <view class='padding bg-white'>20．我做噩梦(噩梦)</view>
+    <radio-group class="radio-group" bindchange="radioChange" name="question20">
+      <label class="radio" wx:for="{{items}}">
+        <radio value="{{item.value}}" />
+        {{item.name}}
+      </label>
+    </radio-group>
+    <block wx:if="{{check.question20 == false}}">
+      <text class='text-red' style='padding:0 30rpx'>*该题不能为空</text>
+    </block>
+  </view>
+  <view class="padding flex flex-direction">
+    <button class='cu-btn bg-green lg' formType="submit">提交评测</button>
+  </view>
+  </form>

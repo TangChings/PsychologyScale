@@ -1,0 +1,15 @@
+<!--pages/home/home.wxml-->
+<view class="cu-custom">
+  <view class="bg-img bg-mask padding-tb-xl" style="background-image: url('https://images.unsplash.com/photo-1535696588143-945e1379f1b0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60')">
+    <view class='padding-xl text-white'>
+      <view class='padding-xs text-xl'>
+        兰州大学在线心理测评
+      </view>
+    </view>
+  </view>
+  <view class="padding flex flex-direction">
+    <button class='cu-btn bg-green lg' bindtap='jiaolv'>焦虑自评量表(SAS)</button>
+    <button class='cu-btn bg-green lg margin-tb-sm' bindtap='yiyu'>抑郁自评量表(SDS)</button>
+    <button class='cu-btn bg-green lg' bindtap='qiangpo'>test</button>
+  </view>
+</view>

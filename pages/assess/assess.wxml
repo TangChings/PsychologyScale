@@ -1,0 +1,17 @@
+<!--pages/assess/assess.wxml-->
+<view class="cu-bar solid-bottom">
+  <view class='action'>
+    <text class='icon-title text-blue'></text>测评结果
+  </view>
+</view>
+<view class='bg-white padding-lr'>
+  <view class='flex-sub text-center'>
+      <view class='text-xl padding'>
+        <text class='text-black text-bold'>您的分数为{{score}}分</text>
+      </view>
+      <view class='padding'>{{assess}}</view>
+  </view>
+  <view class="padding flex flex-direction">
+    <button class='cu-btn bg-green lg' bindtap='returnToHome'>返回主页</button>
+  </view>
+</view>
