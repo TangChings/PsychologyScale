@@ -7,47 +7,63 @@ Page({
    * 页面的初始数据
    */
   data: {
-    sex:'男',
+    sex: '男',
   },
 
   initValidate() {
     const rules = {
-      name:{
-        required:true,
-        rangelength:[2,4],
+      name: {
+        required: true,
+        rangelength: [2, 4],
       },
-      sex:{
-        required:false,
+      stu: {
+        required: true,
+        minlength: 12,
       },
-      tel:{
-        required:true,
-        tel:true,
+      sex: {
+        required: false,
+      },
+      tel: {
+        required: true,
+        tel: true,
+      },
+      mescode: {
+        required: true,
+        minlength: 6,
       }
     }
     const messages = {
-      name:{
-        required:'请输入姓名',
-        rangelength:'请输入2~4个汉字',
+      name: {
+        required: '请输入姓名',
+        rangelength: '请输入2~4个汉字',
       },
-      sex:{
-        required:'请选择性别',
-        sex:'请选择性别',
+      stu: {
+        required: "请输入学号",
+        minlength: '请输入正确的学号',
       },
-      tel:{
-        required:'请输入11位手机号码',
-        tel:'请输入正确的手机号码',
+      sex: {
+        required: '请选择性别',
+        sex: '请选择性别',
+      },
+      tel: {
+        required: '请输入11位手机号码',
+        tel: '请输入正确的手机号码',
+      },
+      mescode: {
+        required: '请输入验证码',
+        minlength: '请输入正确的验证码',
       }
     }
     this.WxValidate = new WxValidate(rules, messages)
   },
 
-  formSubmit(e){
+  formSubmit(e) {
     const params = e.detail.value
-    if (!this.WxValidate.checkForm(params)){
+    if (!this.WxValidate.checkForm(params)) {
       const error = this.WxValidate.errorList[0]
       this.showModal(error)
       return false
-    }else{
+    } else {
       console.log(params)
       wx.showToast({
         title: '提交成功',
@@ -55,20 +71,20 @@ Page({
     }
   },
 
-  showModal(error){
+  showModal(error) {
     wx.showModal({
       content: error.msg,
-      showCancel:false,
+      showCancel: false,
     })
   },
 
-  sexChange (e){
+  sexChange(e) {
     console.log(e.detail.value)
-    if(e.detail.value == true){
+    if (e.detail.value == true) {
       this.setData({
-        'sex':'男'
+        'sex': '男'
       })
-    }else{
+    } else {
       this.setData({
         'sex': '女'
       })
