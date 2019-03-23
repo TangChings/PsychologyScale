@@ -8,9 +8,12 @@ Page({
   data: {
     score:[],
     assess:[],
-    anxietyAssess: "50 以下为无焦虑； 50~59 为轻度焦虑； 60~69 为中度焦虑； 70 以上为严重焦虑。有轻度以上焦虑时建议就近找专业人士进行心理咨询或辅导。",
-    depressionAssess: "小于53分为无抑郁； 大于等于53分且小于63分为轻度抑郁；大于等于63分且小于73分为中至重度抑郁；大于等于73分为重度抑郁。长期处于抑郁状态易导致抑郁症。当抑郁情绪不能自我疏导时，请及时找专业人士进行心理咨询或辅导。"
+    other:'',
+    depressionAssess: "总分10分：你很健康、无抑郁；总分10分—15分，你有轻度情绪不良，要注意调节；总分大于15分者，表明已有抑郁症状，要寻求外界帮助。当大于25分时，说明抑郁已经比较严重了，必须看心理医生。",
+    upiAssess: "1.常规题（1~60）总分>=25分。2.第25题选择为肯定。3.附加题（61~64）肯定数量>= 2。符合上述任意一条即被归为第一类，此时您已表现出了抑郁症状，建议您尽早寻找心理医生面谈。1.25> 常规题总分 >= 20分。2.第8、16、26题中有一题为肯定者。3.附加题肯定数量 = 1。符合上述任意一条即被归为第二类，此时您已表现出了不良情绪，但还没有达到抑郁的程度，建议您适当自己的情绪。若您既不属于第一类，又不属于第二类，那么恭喜您，您很健康，无抑郁症状，请继续保持良好心态。",
+    SCLAssess: '总分：90个项目单项分数相加之和。您的分数越高，那么您的病情就越严重，若您的总分超过了160分，那么您的心理可能已经出现异常，建议寻找心理医生进行进一步筛查。',
   },
+  
   returnToHome (){
     wx.reLaunch({
       url: '../home/home',
@@ -21,19 +24,76 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (app.globalData.anxietyScore){
-      this.setData({
-        'score': app.globalData.anxietyScore,
-        'assess':this.data.anxietyAssess
-      })
-    }
     if (app.globalData.depressionScore){
       this.setData({
         'score':app.globalData.depressionScore,
         'assess':this.data.depressionAssess
       })
+      this.sendDepreGrade()
     }
-    
+    if (app.globalData.upiScore){
+      this.setData({
+        'score':app.globalData.upiScore.score,
+        'assess':this.data.upiAssess,
+        'other': app.globalData.upiScore.type
+      })
+      this.sendUpiGrade()
+    } 
+    if (app.globalData.SCLScore){
+      this.setData({
+        'score':app.globalData.SCLScore.sum,
+        'assess':this.data.SCLAssess,
+      })
+      this.sendSCLGrade()
+    }
+  },
+
+  sendDepreGrade(){
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.request({
+      url: 'https://tang.newif.cn/psychology/upload',
+      data: { 'type': "depression", 'openid': app.globalData.OPENID, 'score': this.data.score, 'time': app.globalData.time },
+      method: 'GET',
+      header: { 'content-type': 'application/json' },
+      success(res) {
+        console.log(res.data)
+      }
+    })
+    wx.hideLoading()
+  },
+
+  sendUpiGrade(){
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.request({
+      url: 'https://tang.newif.cn/psychology/upload',
+      data:{ 'type' : "upi", 'openid': app.globalData.OPENID, 'score': this.data.score, 'other': this.data.other, 'time': app.globalData.time },
+      method: 'GET',
+      header: { 'content-type': 'application/json' },
+      success(res) {
+        console.log(res.data)
+      }
+    })
+    wx.hideLoading()
+  },
+
+  sendSCLGrade(){
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.request({
+      url: 'https://tang.newif.cn/psychology/upload',
+      data: { 'type': "SCL90", 'openid': app.globalData.OPENID, 'sum': this.data.score, 'time': app.globalData.time, 'average': app.globalData.SCLScore.average, 't_score': app.globalData.SCLScore.t_score, 'factor': app.globalData.SCLScore.factor, 'yang': app.globalData.SCLScore.yang, 'yin': app.globalData.SCLScore.yin, 'yang_average': app.globalData.SCLScore.yang_average },
+      method: 'GET',
+      header: { 'content-type': 'application/json' },
+      success(res) {
+        console.log(res.data)
+      }
+    })
+    wx.hideLoading()
   },
 
   /**

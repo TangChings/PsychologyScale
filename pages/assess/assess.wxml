@@ -9,6 +9,9 @@
       <view class='text-xl padding'>
         <text class='text-black text-bold'>您的分数为{{score}}分</text>
       </view>
+      <view class='text-xl padding'>
+        <text class='text-black text-bold'>{{other}}</text>
+      </view>
       <view class='padding'>{{assess}}</view>
   </view>
   <view class="padding flex flex-direction">

@@ -1,0 +1,34 @@
+<view class="cu-bar solid-bottom">
+  <view class='action'>
+    <text class='icon-title text-blue'></text>量表
+  </view>
+</view>
+<block wx:if="{{ifShow == false}}">
+  <view class='padding bg-white'>
+    <view class='text-left padding'>以下列出了有些人可能会有的问题，请仔细地阅读每一条，然后根据最近一星期以内下述情况影响您的实际感觉，在每个问题后标明该题的程度得分。
+    </view>
+    <button class='cu-btn block bg-green margin-tb-sm lg' bindtap='start'>开始测试</button>
+    </view>
+</block>
+
+<block wx:if="{{ifShow != false}}">
+  <view class='bg-white padding'>
+    {{index+1}}.{{nowQuestion.question}}
+    <view class="form-group padding">
+      <radio-group class="radio-group" bindchange="radioChange" name="question">
+        <label class="radio" wx:for="{{items}}">
+          <radio value="{{item.value}}" checked='{{checked}}'/>
+          {{item.name}}
+        </label>
+      </radio-group>
+      <view class='solid-bottom text-xl padding'>
+        <text class='text-black text-bold'>答题进度：{{index + 1}}/{{question.length}}</text>
+      </view>
+      <view class='flex margin-top'>
+    <view class="cu-progress round striped active">
+      <view class='bg-green' style="width:{{width}}%;"></view>
+    </view>
+    </view>
+    </view>
+  </view>
+</block>

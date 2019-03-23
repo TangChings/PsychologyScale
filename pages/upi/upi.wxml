@@ -1,0 +1,33 @@
+<view class="cu-bar solid-bottom">
+  <view class='action'>
+    <text class='icon-title text-blue'></text>量表
+  </view>
+</view>
+<block wx:if="{{ifShow == false}}">
+  <view class='padding bg-white'>
+    <view class='text-left padding'>以下问题是为了了解并增进你的身心健康而设计的调查,请你按照题号顺序阅读，在你最近一年中，常常感觉到、体验到的项目的题号选择“是”，没有感觉过的项目的题号上划“否”。注意只有两种选择。请认真地填写。</view>
+    <button class='cu-btn block bg-green margin-tb-sm lg' bindtap='start'>开始测试</button>
+    </view>
+</block>
+
+<block wx:if="{{ifShow != false}}">
+  <view class='bg-white padding'>
+    {{index+1}}.{{nowQuestion.question}}
+    <view class="form-group padding">
+      <radio-group class="radio-group" bindchange="radioChange" name="question">
+        <label class="radio" wx:for="{{items}}">
+          <radio value="{{item.value}}" checked='{{checked}}'/>
+          {{item.name}}
+        </label>
+      </radio-group>
+      <view class='solid-bottom text-xl padding'>
+        <text class='text-black text-bold'>答题进度：{{index + 1}}/{{question.length}}</text>
+      </view>
+      <view class='flex margin-top'>
+    <view class="cu-progress round striped active">
+      <view class='bg-green' style="width:{{width}}%;"></view>
+    </view>
+    </view>
+    </view>
+  </view>
+</block>

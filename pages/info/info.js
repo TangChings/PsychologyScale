@@ -7,9 +7,16 @@ Page({
    * 页面的初始数据
    */
   data: {
+    name:'',
+    stuNum:'',
     sex: '男',
+    phone:'',
+    code:'',
+    trueCode:null,
+    trueTel:null,
   },
 
+  //wx.validate初始化
   initValidate() {
     const rules = {
       name: {
@@ -20,7 +27,7 @@ Page({
         required: true,
         minlength: 12,
       },
-      sex: {
+      sexInput: {
         required: false,
       },
       tel: {
@@ -41,7 +48,7 @@ Page({
         required: "请输入学号",
         minlength: '请输入正确的学号',
       },
-      sex: {
+      sexInput: {
         required: '请选择性别',
         sex: '请选择性别',
       },
@@ -58,16 +65,61 @@ Page({
   },
 
   formSubmit(e) {
-    const params = e.detail.value
-    if (!this.WxValidate.checkForm(params)) {
-      const error = this.WxValidate.errorList[0]
-      this.showModal(error)
-      return false
-    } else {
-      console.log(params)
+    //验证码和手机号比对
+    var that = this
+    if(this.data.code != this.data.trueCode){
       wx.showToast({
-        title: '提交成功',
+        title: '验证码错误',
+        icon:'none',
+        duration:2000
       })
+    }else if(this.data.phone != this.data.trueTel){
+      wx.showToast({
+        title: '手机号码不一致',
+        icon:'none'
+      })
+    }
+    else{
+      var subData = e.detail.value
+      //加入性别和openid数据
+      subData["sex"] = this.data.sex
+      subData["openid"] = app.globalData.OPENID
+      const params = subData
+      if (!that.WxValidate.checkForm(params)) {
+        const error = that.WxValidate.errorList[0]
+        that.showModal(error)
+        return false
+      } else {
+        console.log(params)
+        app.globalData.NAME = params.name
+        app.globalData.SEX = params.sex
+        app.globalData.STUNUM = params.stu
+        app.globalData.TEL = params.tel
+        wx.setStorageSync('name', app.globalData.NAME)
+        wx.setStorageSync('sex', app.globalData.SEX)
+        wx.setStorageSync('stuNum', app.globalData.STUNUM)
+        wx.setStorageSync('tel', app.globalData.TEL)
+        //数据上传后端
+        wx.showLoading({
+          title: '发送中',
+        })
+        wx.request({
+          url: 'https://tang.newif.cn/psychology/subinfo',
+          data: { 'type': 'subinfo', 'info': params },
+          method: 'GET',
+          header: { 'content-type': 'application/json' },
+          success(res){
+            console.log(res.data)
+          }
+        })
+        wx.hideLoading()
+        wx.showToast({
+          title: '提交成功',
+        })
+        wx.switchTab({
+          url: '/pages/home/home',
+        })
+      }
     }
   },
 
@@ -89,6 +141,50 @@ Page({
         'sex': '女'
       })
     }
+  },
+
+  sendVeriCode(){
+    if(this.data.phone){
+      wx.showLoading({
+        title: '验证码发送中',
+      })
+      var that = this
+      wx.request({
+        url: 'https://tang.newif.cn/psychology/vericode',
+        data: { 'type': 'get_vericode', 'phone': this.data.phone },
+        method: 'GET',
+        header: { 'content-type': 'application/json' },
+        success(res) {
+          that.setData({ 
+            'trueCode': res.data.vericode,
+            'trueTel':res.data.phoneNum
+           })
+          console.log(that.data.trueCode)
+          wx.hideLoading()
+        }
+      })
+    }else{
+      wx.showToast({
+        title: '请输入手机号',
+        icon:'none',
+      })
+    }
+  },
+
+  inputName(e){
+    this.setData({'name':e.detail.value})
+  },
+
+  inputStu(e){
+    this.setData({'stuNum':e.detail.value})
+  },
+
+  getTel(e) {
+    this.setData({'phone':e.detail.value})
+  },
+
+  inputCode(e){
+    this.setData({'code':e.detail.value})
   },
 
   /**

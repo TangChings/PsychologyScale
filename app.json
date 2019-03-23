@@ -1,15 +1,39 @@
 {
   "pages":[
     "pages/home/home",
-    "pages/anxiety/anxiety",
     "pages/depression/depression",
+    "pages/upi/upi",
+    "pages/scl90/scl90",
     "pages/assess/assess",
-    "pages/info/info"
+    "pages/info/info",
+    "pages/my/my"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "兰大在线心理测评",
     "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#aaa",
+    "selectedColor": "#39b54a",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "/images/home.png",
+        "selectedIconPath": "/images/home-fill.png",
+        "selectedColor":"#000000",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "/images/my.png",
+        "selectedIconPath": "/images/my-fill.png",
+        "selectedColor": "#000000",
+        "text": "个人"
+      }
+    ]
   }
 }

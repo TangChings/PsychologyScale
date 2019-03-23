@@ -5,14 +5,14 @@
 </view>
 <block wx:if="{{ifShow == false}}">
   <view class='padding bg-white'>
-    <view class='text-left padding'>下面有二十条文字（括号中为症状名称），请仔细阅读每一条，把意思弄明白，然后根据您最近一星期的实际情况，选择适当的选项。</view>
+    <view class='text-left padding'>下面有二十一道题目，请仔细阅读每一条，把意思弄明白，然后根据您最近一星期的实际情况，选择适当的选项。</view>
     <button class='cu-btn block bg-green margin-tb-sm lg' bindtap='start'>开始测试</button>
     </view>
 </block>
 
 <block wx:if="{{ifShow != false}}">
   <view class='bg-white padding'>
-    {{index+1}}.{{nowQuestion.question}}
+    {{index+1}}.
     <view class="form-group padding">
       <radio-group class="radio-group" bindchange="radioChange" name="question">
         <label class="radio" wx:for="{{items}}">
